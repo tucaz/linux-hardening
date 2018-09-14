@@ -97,7 +97,7 @@ rm /root/sshd_config
 
 # References
 
-[R1] - https://linux-audit.com/audit-and-harden-your-ssh-configuration/
-[R2] - https://www.digitalocean.com/community/tutorials/how-to-create-a-sudo-user-on-ubuntu-quickstart
-[R3] - https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/
-[R4] - https://linux-audit.com/using-ssh-keys-instead-of-passwords/
+- [R1] - https://linux-audit.com/audit-and-harden-your-ssh-configuration/
+- [R2] - https://www.digitalocean.com/community/tutorials/how-to-create-a-sudo-user-on-ubuntu-quickstart
+- [R3] - https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/
+- [R4] - https://linux-audit.com/using-ssh-keys-instead-of-passwords/
