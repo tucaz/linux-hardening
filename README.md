@@ -18,7 +18,7 @@ Backup SSH configuration before changing it [R1]
 cp /etc/ssh/sshd_config /root/sshd_config
 ```
 
-[sshd_config](configs/sshd/sshd_config) file with restrictions in place [R1]
+[sshd_config](https://github.com/tucaz/linux-hardening/blob/master/sshd_config) file with restrictions in place [R1]
 
 - PermitRootLogin no
 - MaxAuthTries 3
@@ -155,6 +155,19 @@ Fail2ban keeps track of attemps to log into SSH on your server. Once it passes a
 ```sh
 sudo apt-get install fail2ban
 ```
+# Installing NGINX
+
+Since I want to use NGINX with the pagespeed [R9] mod I have to build it from source.
+
+I use the automated install from R10 with the adittional parameters below:
+
+```
+--with-compat --with-file-aio --with-threads --with-http_addition_module --with-http_auth_request_module --with-http_dav_module --with-http_flv_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_mp4_module --with-http_random_index_module --with-http_realip_module --with-http_secure_link_module --with-http_slice_module --with-http_ssl_module --with-http_stub_status_module --with-http_sub_module --with-http_v2_module --with-mail --with-mail_ssl_module --with-stream --with-stream_realip_module --with-stream_ssl_module --with-stream_ssl_preread_module
+```
+
+That will install NGINX in the folders below instead of the standard structure of /etc/nginx/.
+
+![NGINX Paths](images/nginx/path.png)
 
 # References
 
@@ -166,3 +179,5 @@ sudo apt-get install fail2ban
 - [R6] - https://www.digitalocean.com/community/tutorials/how-to-set-up-a-firewall-with-ufw-on-ubuntu-18-04
 - [R7] - https://www.digitalocean.com/community/tutorials/how-to-protect-ssh-with-fail2ban-on-ubuntu-14-04
 - [R8] - https://www.linode.com/docs/security/using-fail2ban-for-security/
+- [R9] - https://developers.google.com/speed/pagespeed/module/
+- [R10] - https://www.modpagespeed.com/doc/build_ngx_pagespeed_from_source
