@@ -165,9 +165,49 @@ I use the automated install from R10 with the adittional parameters below:
 --with-compat --with-file-aio --with-threads --with-http_addition_module --with-http_auth_request_module --with-http_dav_module --with-http_flv_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_mp4_module --with-http_random_index_module --with-http_realip_module --with-http_secure_link_module --with-http_slice_module --with-http_ssl_module --with-http_stub_status_module --with-http_sub_module --with-http_v2_module --with-mail --with-mail_ssl_module --with-stream --with-stream_realip_module --with-stream_ssl_module --with-stream_ssl_preread_module
 ```
 
-That will install NGINX in the folders below instead of the standard structure of /etc/nginx/.
+That will install NGINX in the folders below instead of the standard structure of `/etc/nginx/`.
 
 ![NGINX Paths](images/nginx/path.png)
+
+## Configuring NGINX
+
+Once NGINX is installed it won't be configured to run as a service since we compiled it from source. 
+
+When it is installed using `apt-get` it registers itself as a service by creating a SysV script. If you want to use that style of service management you can look at R11 or R12.
+
+This post [R13] at StackOverflow has some cool information about how to discover what is being used. A few quotes:
+
+```
+You can poke around the system to find indicators. One way is to check for the existence of three directories:
+
+- /usr/lib/systemd tells you you're on a systemd based system.
+- /usr/share/upstart is a pretty good indicator that you're on an Upstart-based system.
+- /etc/init.d tells you the box has SysV init in its history
+```
+
+and
+
+```
+The init process is always assigned PID 1. The /proc filesystem provides a way to obtain the path to an executable given a PID.
+```
+
+```sh
+sudo stat /proc/1/exe
+```
+
+I'm going to use SystemD since it seems to be what cool kids use nowadays and I need to familiarize myself with it. My [nginx.service](/config/systemd/nginx.service) comes from R14.
+
+You should just place it in `/etc/systemd/system` and reload the services daemon [R15]:
+
+```sh
+cd /etc/systemd/system/
+sudo wget https://raw.githubusercontent.com/tucaz/linux-hardening/master/configs/systemd/nginx.service
+sudo chmod 664 nginx.service
+sudo systemctl daemon-reload
+sudo systemctl start nginx
+```
+
+NGINX is running! \o/
 
 # References
 
@@ -181,3 +221,8 @@ That will install NGINX in the folders below instead of the standard structure o
 - [R8] - https://www.linode.com/docs/security/using-fail2ban-for-security/
 - [R9] - https://developers.google.com/speed/pagespeed/module/
 - [R10] - https://www.modpagespeed.com/doc/build_ngx_pagespeed_from_source
+- [R11] - https://tutorials.technology/tutorials/00-install-nginx-from-source.html
+- [R12] - http://kbeezie.com/debian-ubuntu-nginx-init-script/
+- [R13] - https://unix.stackexchange.com/questions/196166/how-to-find-out-if-a-system-uses-sysv-upstart-or-systemd-initsystem
+- [R14] - https://www.nginx.com/resources/wiki/start/topics/examples/systemd/
+- [R15] - https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/system_administrators_guide/sect-managing_services_with_systemd-unit_files
