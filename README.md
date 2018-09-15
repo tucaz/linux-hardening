@@ -148,6 +148,14 @@ Now we install sendmail:
 apt-get install sendmail
 ```
 
+# Installing fail2ban
+
+Fail2ban keeps track of attemps to log into SSH on your server. Once it passes a treshold it blocks that IP. It can probably do more, but that's enough for me now. It seems like the default configurations are pretty good as they are so it's just a matter of installing it.
+
+```sh
+sudo apt-get install fail2ban
+```
+
 # References
 
 - [R1] - https://linux-audit.com/audit-and-harden-your-ssh-configuration/
@@ -156,3 +164,5 @@ apt-get install sendmail
 - [R4] - https://linux-audit.com/using-ssh-keys-instead-of-passwords/
 - [R5] - https://askubuntu.com/questions/533269/how-to-check-if-ufw-is-running-programmatically
 - [R6] - https://www.digitalocean.com/community/tutorials/how-to-set-up-a-firewall-with-ufw-on-ubuntu-18-04
+- [R7] - https://www.digitalocean.com/community/tutorials/how-to-protect-ssh-with-fail2ban-on-ubuntu-14-04
+- [R8] - https://www.linode.com/docs/security/using-fail2ban-for-security/
