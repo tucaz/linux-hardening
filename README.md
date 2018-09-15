@@ -18,7 +18,7 @@ Backup SSH configuration before changing it [R1]
 cp /etc/ssh/sshd_config /root/sshd_config
 ```
 
-[sshd_config](https://github.com/tucaz/linux-hardening/blob/master/sshd_config) file with restrictions in place [R1]
+[sshd_config](configs/sshd/sshd_config) file with restrictions in place [R1]
 
 - PermitRootLogin no
 - MaxAuthTries 3
