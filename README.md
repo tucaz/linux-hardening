@@ -132,6 +132,22 @@ sudo ufw enable
 ```
 Now we have a firewall :)
 
+# Sending email
+
+I want to send emails from my server. In this particular case I want to send fail2ban notifications.
+
+If you are using UFW as a firewall you probably want to allow emails to be sent from the machine:
+
+```sh
+ufw allow out 587
+```
+
+Now we install sendmail:
+
+```sh
+apt-get install sendmail
+```
+
 # References
 
 - [R1] - https://linux-audit.com/audit-and-harden-your-ssh-configuration/
