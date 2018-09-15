@@ -197,13 +197,14 @@ sudo stat /proc/1/exe
 
 I'm going to use SystemD since it seems to be what cool kids use nowadays and I need to familiarize myself with it. My [nginx.service](/config/systemd/nginx.service) comes from R14.
 
-You should just place it in `/etc/systemd/system` and reload the services daemon [R15]:
+You should just place it in `/etc/systemd/system` and reload the services daemon [R15][R16]:
 
 ```sh
 cd /etc/systemd/system/
 sudo wget https://raw.githubusercontent.com/tucaz/linux-hardening/master/configs/systemd/nginx.service
 sudo chmod 664 nginx.service
 sudo systemctl daemon-reload
+sudo systemctl enable nginx
 sudo systemctl start nginx
 ```
 
@@ -226,3 +227,4 @@ NGINX is running! \o/
 - [R13] - https://unix.stackexchange.com/questions/196166/how-to-find-out-if-a-system-uses-sysv-upstart-or-systemd-initsystem
 - [R14] - https://www.nginx.com/resources/wiki/start/topics/examples/systemd/
 - [R15] - https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/system_administrators_guide/sect-managing_services_with_systemd-unit_files
+- [R16] - https://www.digitalocean.com/community/tutorials/how-to-configure-a-linux-service-to-start-automatically-after-a-crash-or-reboot-part-1-practical-examples
