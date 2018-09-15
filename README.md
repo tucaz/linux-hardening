@@ -73,6 +73,7 @@ mkdir /home/<username>/.ssh
 chmod 700 /home/<username>/.ssh
 mv /home/<username>/filename.pub /home/<username>/.ssh/authorized_keys
 chmod 600 /home/<username>/.ssh/authorized_keys
+chown -R <username>:<username> /home/<username>/.ssh
 ```
 
 Finally, let's try to login as the new user using the new key before we reload SSH and lose SSH access if we did something wrong.
