@@ -96,9 +96,47 @@ You can also remove the backup file you had:
 rm /root/sshd_config
 ```
 
+# Setting up a firewall [R6]
+
+Verifying is ufw is active [R5]:
+
+```sh
+sudo ufw status
+```
+
+If UFW is not installed, run:
+
+```sh
+sudo apt-get install ufw
+```
+
+By default, it is a good idea to DROP all connections coming from the external world except for the few connections you want to explicitly allow.
+
+```sh
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+```
+
+Now we allow for SSH, HTTP and HTTPS:
+
+```sh
+ufw allow ssh
+ufw allow http
+ufw allow https
+```
+
+When everything looks good and we are confidend about our rules:
+
+```sh
+sudo ufw enable
+```
+Now we have a firewall :)
+
 # References
 
 - [R1] - https://linux-audit.com/audit-and-harden-your-ssh-configuration/
 - [R2] - https://www.digitalocean.com/community/tutorials/how-to-create-a-sudo-user-on-ubuntu-quickstart
 - [R3] - https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/
 - [R4] - https://linux-audit.com/using-ssh-keys-instead-of-passwords/
+- [R5] - https://askubuntu.com/questions/533269/how-to-check-if-ufw-is-running-programmatically
+- [R6] - https://www.digitalocean.com/community/tutorials/how-to-set-up-a-firewall-with-ufw-on-ubuntu-18-04
