@@ -169,6 +169,12 @@ That will install NGINX in the folders below instead of the standard structure o
 
 ![NGINX Paths](images/nginx/path.png)
 
+## Creating user for nginx [R17]
+
+```sh
+ sudo adduser --system --no-create-home --group --disabled-login --disabled-password nginx
+ ```
+
 ## Configuring NGINX
 
 Once NGINX is installed it won't be configured to run as a service since we compiled it from source. 
@@ -208,6 +214,8 @@ sudo systemctl enable nginx
 sudo systemctl start nginx
 ```
 
+Make sure that `PIDFile` from nginx.service points to the same place as `pid` inside `nginx.conf`.
+
 NGINX is running! \o/
 
 # References
@@ -228,3 +236,4 @@ NGINX is running! \o/
 - [R14] - https://www.nginx.com/resources/wiki/start/topics/examples/systemd/
 - [R15] - https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/system_administrators_guide/sect-managing_services_with_systemd-unit_files
 - [R16] - https://www.digitalocean.com/community/tutorials/how-to-configure-a-linux-service-to-start-automatically-after-a-crash-or-reboot-part-1-practical-examples
+- [R17] - https://serverfault.com/a/469102/75242
