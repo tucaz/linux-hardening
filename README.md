@@ -175,7 +175,7 @@ That will install NGINX in the folders below instead of the standard structure o
  sudo adduser --system --no-create-home --group --disabled-login --disabled-password nginx
  ```
 
-## Configuring NGINX
+## Configuring NGINX as a system service
 
 Once NGINX is installed it won't be configured to run as a service since we compiled it from source. 
 
@@ -217,6 +217,10 @@ sudo systemctl start nginx
 Make sure that `PIDFile` from nginx.service points to the same place as `pid` inside `nginx.conf`.
 
 NGINX is running! \o/
+
+# Configuraing NGINX
+
+The base configuration file of nginx is located on `/usr/local/nginx/conf/nginx.conf` this is the one I'm using: [nginx.conf](configs/nginx/nginx.conf)
 
 # References
 
