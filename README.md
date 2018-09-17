@@ -222,6 +222,19 @@ NGINX is running! \o/
 
 The base configuration file of nginx is located on `/usr/local/nginx/conf/nginx.conf` this is the one I'm using: [nginx.conf](configs/nginx/nginx.conf)
 
+## Adding HTTPS
+
+- https://certbot.eff.org/lets-encrypt/ubuntubionic-nginx
+- https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-18-04
+
+```sh
+sudo apt install nginx python-certbot-nginx 
+sudo mkdir /usr/local/certbot/
+certbot --nginx --nginx-server-root /usr/local/nginx/conf/ --work-dir /usr/local/certbot/ --logs-dir /usr/local/certbot/logs
+```
+
+See [R18] for details on passing parameters to certbot plugin for nginx
+
 # References
 
 - [R1] - https://linux-audit.com/audit-and-harden-your-ssh-configuration/
@@ -241,3 +254,4 @@ The base configuration file of nginx is located on `/usr/local/nginx/conf/nginx.
 - [R15] - https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/system_administrators_guide/sect-managing_services_with_systemd-unit_files
 - [R16] - https://www.digitalocean.com/community/tutorials/how-to-configure-a-linux-service-to-start-automatically-after-a-crash-or-reboot-part-1-practical-examples
 - [R17] - https://serverfault.com/a/469102/75242
+- [R18] - https://github.com/certbot/certbot/issues/718
