@@ -218,7 +218,7 @@ Make sure that `PIDFile` from nginx.service points to the same place as `pid` in
 
 NGINX is running! \o/
 
-# Configuraing NGINX
+# Configuring NGINX
 
 The base configuration file of nginx is located on `/usr/local/nginx/conf/nginx.conf` this is the one I'm using: [nginx.conf](configs/nginx/nginx.conf)
 
@@ -235,6 +235,14 @@ certbot --nginx --nginx-server-root /usr/local/nginx/conf/ --work-dir /usr/local
 
 See [R18] for details on passing parameters to certbot plugin for nginx
 
+# PHP
+
+To run php with nginx we need php-fpm:
+
+```sh
+sudo apt-get install php-fpm
+```
+
 # MySql
 
 ## Percona toolkit
@@ -244,6 +252,23 @@ List of MySql tools that help administration and troubleshooting (free) https://
 ```sh
 sudo apt-get install percona-toolkit
 ```
+
+# Wordpress
+
+## Folder permissions
+
+From [R19] and [R20] within the wordpress folder:
+
+```sh
+sudo find . -type d -exec chmod 750 {} \;
+sudo find . -type d -exec chmod 750 {} \;
+sudo chmod 600 wp-config.php
+```
+
+More references that I still have to apply:
+
+- [R21]
+- [R22]
 
 # References
 
@@ -265,3 +290,7 @@ sudo apt-get install percona-toolkit
 - [R16] - https://www.digitalocean.com/community/tutorials/how-to-configure-a-linux-service-to-start-automatically-after-a-crash-or-reboot-part-1-practical-examples
 - [R17] - https://serverfault.com/a/469102/75242
 - [R18] - https://github.com/certbot/certbot/issues/718
+- [R19] - https://codex.wordpress.org/Changing_File_Permissions
+- [R20] - https://codex.wordpress.org/Hardening_WordPress
+- [R21] - https://wpsecure.net/secure-wordpress/
+- [R22] - https://makeawebsitehub.com/wordpress-security/
