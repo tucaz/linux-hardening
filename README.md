@@ -235,6 +235,16 @@ certbot --nginx --nginx-server-root /usr/local/nginx/conf/ --work-dir /usr/local
 
 See [R18] for details on passing parameters to certbot plugin for nginx
 
+# MySql
+
+## Percona toolkit
+
+List of MySql tools that help administration and troubleshooting (free) https://www.percona.com/doc/percona-toolkit/LATEST/installation.html
+
+```sh
+sudo apt-get install percona-toolkit
+```
+
 # References
 
 - [R1] - https://linux-audit.com/audit-and-harden-your-ssh-configuration/
