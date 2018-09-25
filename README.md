@@ -237,11 +237,24 @@ See [R18] for details on passing parameters to certbot plugin for nginx
 
 # PHP
 
-To run php with nginx we need php-fpm:
+To run php with nginx we need php-fpm and a few extensions that wordpress uses:
+
+- php-xml - Load/parse XML
+- php-curl - Call `curl` from PHP
+- php-mysql - MySql driver for PHP
 
 ```sh
-sudo apt-get install php-fpm
+sudo apt-get install php-fpm php-mysql php-curl php-xml
 ```
+
+Creating a user for PHP to run and making it part of the nginx group:
+
+```sh
+sudo useradd --shell /bin/false -M -G nginx wwwphp
+sudo usermod -L wwwphp
+```
+
+This will be added as the php-fpm pool user (add pool.conf).
 
 # MySql
 
@@ -261,7 +274,7 @@ From [R19] and [R20] within the wordpress folder:
 
 ```sh
 sudo find . -type d -exec chmod 750 {} \;
-sudo find . -type d -exec chmod 750 {} \;
+sudo find . -type f -exec chmod 640 {} \;
 sudo chmod 600 wp-config.php
 ```
 
@@ -269,6 +282,33 @@ More references that I still have to apply:
 
 - [R21]
 - [R22]
+
+# NodeJS
+
+Installing NodeJS and NPM:
+
+```sh
+sudo apt-get install nodejs npm
+```
+
+Manage NodeJS processes with PM2 [R23]:
+
+```sh
+sudo npm install -g pm2
+```
+
+Creates template file for pm2:
+
+```sh
+sudo pm2 init
+```
+
+Creating a user for NodeJS apps and making it part of the nginx group:
+
+```sh
+sudo useradd --shell /bin/false -M -G nginx wwwnodejs
+sudo usermod -L wwwnodejs
+```
 
 # References
 
@@ -294,3 +334,4 @@ More references that I still have to apply:
 - [R20] - https://codex.wordpress.org/Hardening_WordPress
 - [R21] - https://wpsecure.net/secure-wordpress/
 - [R22] - https://makeawebsitehub.com/wordpress-security/
+- [R23] - https://pm2.io/runtime/
