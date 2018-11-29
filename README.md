@@ -285,6 +285,13 @@ More references that I still have to apply:
 
 # NodeJS
 
+Before installing NodeJS let's create a user that will run all the node applications. Creating a user for NodeJS apps and making it part of the nginx group. It also makes the home folder writable by the `nginx` group which my main user belongs to so we can later install and run nodejs under this user.
+
+```sh
+sudo useradd --shell /bin/bash --create-home --comment 'NodeJS Applications User' -g nginx wwwnodejs
+sudo usermod -L wwwnodejs
+```
+
 ## Installing NodeJS and NPM as root (not recommended, but easier)
 
 ```sh
@@ -304,29 +311,36 @@ sudo pm2 init
 ```
 ## Installing NodeJS and NPM as non-root [R24][R25][R26]
 
-This assumes your username is `username` and it will take a **lot** of time since it will compile it from the source.
+This will install nodejs for the user `wwwnodejs` which is the user we created especially for the purpose of running our node applications.
 
 ```sh
 sudo apt-get install xz-utils
+sudo su - wwwnodejs # change to user wwwnodejs so we can install NodeJS under it
 cd ~
-mkdir .npm-packages
+mkdir .npm-packages # creates the folder which will hold all packages that NPM installs
 wget https://nodejs.org/dist/v11.3.0/node-v11.3.0-linux-x64.tar.xz
 tar -xf node-v11.3.0-linux-x64.tar.xz
-sudo mv node-v11.3.0-linux-x64 /usr/local/node
-sudo chown -R username:username /usr/local/node/
-sudo ln -s /usr/local/node/bin/npm /usr/local/sbin/npm
-sudo ln -s /usr/local/node/bin/npx /usr/local/sbin/npx
-npm config set prefix ~/.npm-packages
+exit # go back to our main user so we can move NodeJS installation where we want it
+sudo mv /home/wwwnodejs/node-v11.3.0-linux-x64 /usr/local/node
+sudo su - wwwnodejs
 echo 'export PATH=$HOME/.npm-packages/bin:$PATH' >> ~/.bashrc
+echo 'export PATH=/usr/local/sbin:$PATH' >> ~/.bashrc
 . ~/.bashrc
-
+npm config set prefix ~/.npm-packages
+npm install -g npm # "installs" NPM for this user 
+exit
+echo 'export PATH=/home/wwwnodejs/.npm-packages/bin:$PATH' >> ~/.bashrc
+. ~/.bashrc
 ```
 
-Creating a user for NodeJS apps and making it part of the nginx group:
+### Installing PM2 as non-root user and make it a service [R27]
 
 ```sh
-sudo useradd --shell /bin/false -M -G nginx wwwnodejs
-sudo usermod -L wwwnodejs
+sudo su - wwwnodejs
+npm install -g pm2
+exit # go back to our main user that has powers to change systemd services
+sudo env PATH=$PATH:/usr/local/node/bin /home/wwwnodejs/.npm-packages/lib/node_modules/pm2/bin/pm2 startup systemd -u wwwnodejs --hp /home/wwwnodejs
+sudo systemctl start pm2-wwwnodejs
 ```
 
 # References
@@ -357,3 +371,4 @@ sudo usermod -L wwwnodejs
 - [R24] - https://stackoverflow.com/a/31046037/147453
 - [R25] - https://johnpapa.net/node-and-npm-without-sudo/
 - [R26] - https://gist.github.com/isaacs/579814
+- [R27] - http://pm2.keymetrics.io/docs/usage/startup/
