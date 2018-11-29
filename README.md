@@ -302,21 +302,24 @@ Creates template file for pm2:
 ```sh
 sudo pm2 init
 ```
-## Installing NodeJS and NPM as non-root [R24]
+## Installing NodeJS and NPM as non-root [R24][R25][R26]
 
 This assumes your username is `username` and it will take a **lot** of time since it will compile it from the source.
 
 ```sh
-sudo mkdir /usr/local/node
-sudo chown -R username:root /usr/local/node
+sudo apt-get install xz-utils
 cd ~
-mkdir ~/node-latest-install
-cd ~/node-latest-install
-curl http://nodejs.org/dist/node-latest.tar.gz | tar xz --strip-components=1
-./configure --prefix=/usr/local/node
-make install
-ln -s /usr/local/node/node /usr/local/sbin/node
-curl -L https://www.npmjs.com/install.sh | sh
+mkdir .npm-packages
+wget https://nodejs.org/dist/v11.3.0/node-v11.3.0-linux-x64.tar.xz
+tar -xf node-v11.3.0-linux-x64.tar.xz
+sudo mv node-v11.3.0-linux-x64 /usr/local/node
+sudo chown -R username:username /usr/local/node/
+sudo ln -s /usr/local/node/bin/npm /usr/local/sbin/npm
+sudo ln -s /usr/local/node/bin/npx /usr/local/sbin/npx
+npm config set prefix ~/.npm-packages
+echo 'export PATH=$HOME/.npm-packages/bin:$PATH' >> ~/.bashrc
+. ~/.bashrc
+
 ```
 
 Creating a user for NodeJS apps and making it part of the nginx group:
@@ -352,3 +355,5 @@ sudo usermod -L wwwnodejs
 - [R22] - https://makeawebsitehub.com/wordpress-security/
 - [R23] - https://pm2.io/runtime/
 - [R24] - https://stackoverflow.com/a/31046037/147453
+- [R25] - https://johnpapa.net/node-and-npm-without-sudo/
+- [R26] - https://gist.github.com/isaacs/579814
