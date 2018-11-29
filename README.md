@@ -285,7 +285,7 @@ More references that I still have to apply:
 
 # NodeJS
 
-Installing NodeJS and NPM:
+## Installing NodeJS and NPM as root (not recommended, but easier)
 
 ```sh
 sudo apt-get install nodejs npm
@@ -301,6 +301,22 @@ Creates template file for pm2:
 
 ```sh
 sudo pm2 init
+```
+## Installing NodeJS and NPM as non-root [R24]
+
+This assumes your username is `username` and it will take a **lot** of time since it will compile it from the source.
+
+```sh
+sudo mkdir /usr/local/node
+sudo chown -R username:root /usr/local/node
+cd ~
+mkdir ~/node-latest-install
+cd ~/node-latest-install
+curl http://nodejs.org/dist/node-latest.tar.gz | tar xz --strip-components=1
+./configure --prefix=/usr/local/node
+make install
+ln -s /usr/local/node/node /usr/local/sbin/node
+curl -L https://www.npmjs.com/install.sh | sh
 ```
 
 Creating a user for NodeJS apps and making it part of the nginx group:
@@ -335,3 +351,4 @@ sudo usermod -L wwwnodejs
 - [R21] - https://wpsecure.net/secure-wordpress/
 - [R22] - https://makeawebsitehub.com/wordpress-security/
 - [R23] - https://pm2.io/runtime/
+- [R24] - https://stackoverflow.com/a/31046037/147453
