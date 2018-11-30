@@ -343,6 +343,22 @@ sudo env PATH=$PATH:/usr/local/node/bin /home/wwwnodejs/.npm-packages/lib/node_m
 sudo systemctl start pm2-wwwnodejs
 ```
 
+# PostgreSql
+
+PostgreSql authentication is based on a linux user. To access it:
+
+```sh
+sudo su - postgres
+psql
+```
+
+Useful commands:
+
+- `\q` - Exist the psql console
+- `\l` - Lists all databases in the server
+- `\du` - List of users/roles
+- `SELECT grantee, privilege_type FROM information_schema.role_table_grants` - List detailed privileges for each table
+
 # References
 
 - [R1] - https://linux-audit.com/audit-and-harden-your-ssh-configuration/
