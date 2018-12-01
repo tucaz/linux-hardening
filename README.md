@@ -343,6 +343,27 @@ sudo env PATH=$PATH:/usr/local/node/bin /home/wwwnodejs/.npm-packages/lib/node_m
 sudo systemctl start pm2-wwwnodejs
 ```
 
+### Environment variables in PM2 processes
+
+For some reason it seems like PM2 can't read the environment variables set for the user through `~/.bashrc` or anything of the sort. The best idea I found was [R29]:
+
+1. Store the `KEY=VALUE` variables in a file located at `/env/var/`
+2. Add `env $(cat /env/var/*)` before calling the `pm2 startOrRestart` command
+
+Relevant section of the `ecosystem.config.js` file:
+
+```js
+...
+deploy: {
+	production: {
+	  ...
+	  'post-deploy': 'npm install -- production && env $(cat /var/env/*) pm2 startOrRestart ecosystem.config.js --env production --update-env'
+   ...
+	}
+}
+...
+```
+
 # PostgreSql
 
 PostgreSql authentication is based on a linux user. To access it:
@@ -398,3 +419,4 @@ CREATE ROLE my_role WITH LOGIN PASSWORD 'my_password';
 - [R26] - https://gist.github.com/isaacs/579814
 - [R27] - http://pm2.keymetrics.io/docs/usage/startup/
 - [R28] - https://severalnines.com/blog/postgresql-privileges-user-management-what-you-should-know
+- [R29] - https://www.digitalocean.com/community/questions/passing-environment-variables-to-node-js-using-pm2
