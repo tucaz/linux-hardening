@@ -357,7 +357,16 @@ Useful commands:
 - `\q` - Exist the psql console
 - `\l` - Lists all databases in the server
 - `\du` - List of users/roles
+- `\dt` - List all tables
+- `\dn` - List all schemas in the database
 - `SELECT grantee, privilege_type FROM information_schema.role_table_grants` - List detailed privileges for each table
+
+## Creating roles (users?) [R28]
+
+```sql
+CREATE ROLE my_role WITH LOGIN PASSWORD 'my_password';
+```
+
 
 # References
 
@@ -388,3 +397,4 @@ Useful commands:
 - [R25] - https://johnpapa.net/node-and-npm-without-sudo/
 - [R26] - https://gist.github.com/isaacs/579814
 - [R27] - http://pm2.keymetrics.io/docs/usage/startup/
+- [R28] - https://severalnines.com/blog/postgresql-privileges-user-management-what-you-should-know
