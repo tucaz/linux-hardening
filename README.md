@@ -388,6 +388,12 @@ Useful commands:
 CREATE ROLE my_role WITH LOGIN PASSWORD 'my_password';
 ```
 
+## Creating database
+
+```sql
+CREATE DATABASE backend WITH OWNER='dev' ENCODING='UTF8' LC_COLLATE='pt_BR' LC_CTYPE='pt_BR' TEMPLATE template0;
+```
+
 
 # References
 
