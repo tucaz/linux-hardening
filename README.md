@@ -427,6 +427,12 @@ Addind Docker APT repository
  sudo docker run hello-world
  ```
  
+ Whenever using Docker and UFW (firewall) on the host UFW will prevent traffic coming from Docker into the host. This is useful in the case you want to access some service **in the host** from docker. In order to make that work we need to add a new UFW rule [R31]:
+ 
+ ```sh
+ sudo ufw allow in on docker0 from 172.17.0.0/16 to 172.17.0.0/16
+ ```
+ 
  # Ubuntu environment variables
  
  For system-wide environment variables using `/etc/environment` is an option. However, not all characters are valid there. `#` is an example. 
@@ -475,3 +481,4 @@ Addind Docker APT repository
 - [R28] - https://severalnines.com/blog/postgresql-privileges-user-management-what-you-should-know
 - [R29] - https://www.digitalocean.com/community/questions/passing-environment-variables-to-node-js-using-pm2
 - [R30] - https://docs.docker.com/install/linux/docker-ce/ubuntu/
+- [R31] - https://stackoverflow.com/questions/50768002/docker-ufw-connect-to-host-machine
