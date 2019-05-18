@@ -394,7 +394,55 @@ CREATE ROLE my_role WITH LOGIN PASSWORD 'my_password';
 CREATE DATABASE backend WITH OWNER='dev' ENCODING='UTF8' LC_COLLATE='pt_BR' LC_CTYPE='pt_BR' TEMPLATE template0;
 ```
 
+# Docker [R30]
 
+Removing any old docker installations
+```sh
+sudo apt-get remove docker docker-engine docker.io containerd runc
+```
+
+Dependencies for installation
+```sh
+sudo apt-get install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+```
+
+Docker official GPG key
+```sh
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+```
+
+Addind Docker APT repository
+```sh
+ sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+ ```
+ 
+ Installing docker
+ ```sh
+ sudo apt-get update
+ sudo apt-get install docker-ce docker-ce-cli containerd.io
+ ```
+ 
+ Verifying it works
+ ```sh
+ sudo docker run hello-world
+ ```
+ 
+ # Ubuntu environment variables
+ 
+ For system-wide environment variables using `/etc/environment` is an option. However, not all characters are valid there. `#` is an example. 
+ 
+ A better alternative is to add a shell script in `/etc/profile.d` which will get executed everytime a login happens.
+ 
+ ```sh
+ sudo vim /etc/profile.d/env_vars.sh
+ ```
+ 
+ Add variables using export:
+ 
+ ```sh
+ export VAR_NAME=value
+ ```
+ 
 # References
 
 - [R1] - https://linux-audit.com/audit-and-harden-your-ssh-configuration/
@@ -426,3 +474,4 @@ CREATE DATABASE backend WITH OWNER='dev' ENCODING='UTF8' LC_COLLATE='pt_BR' LC_C
 - [R27] - http://pm2.keymetrics.io/docs/usage/startup/
 - [R28] - https://severalnines.com/blog/postgresql-privileges-user-management-what-you-should-know
 - [R29] - https://www.digitalocean.com/community/questions/passing-environment-variables-to-node-js-using-pm2
+- [R30] - https://docs.docker.com/install/linux/docker-ce/ubuntu/
