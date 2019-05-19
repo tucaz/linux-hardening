@@ -451,7 +451,7 @@ host    all             all             172.17.0.2/32           md5 #where 172.1
  After that, PostgreSql needs to be restarted:
  
  ```sh
- sudo service postgresql start
+ sudo service postgresql restart
  ```
  
  # Installing Sentry using Docker and PostgreSql in host
@@ -473,6 +473,22 @@ host    all             all             172.17.0.2/32           md5 #where 172.1
 ```
 
 Since I'm already using the default port `9000` for another application the new port needs to be specified in `docker-compose.yml`.
+
+## Troubleshooting
+
+If the installation takes forever it might be a sympton that it can't connect to the databse. After a while the install process will raise and error specifying if that's the case. Verify:
+
+- `pg_hba.conf` is correctly configured to allow user/database/docker ip
+- `postgresql.conf` has the listener correctly configured based on the docker interface/network that is being used
+- Verify that docker didn't create a new network that is not authorized by running `docker inspect container_id`
+
+When installing GitHub from Sentry make sure that:
+
+1. You put the correct GitHub application name. It is not what you type as a name, but the URL it generates. For example: "My Integration" becomes "my-integration".
+2. You replace new lines with `\n\` in private_key so it is all one string line
+3. If it doesn't work you can access Sentry log by using `sudo docker attach conainer_name`
+4. If you see a `ValueError` it means that your PRIVATE_KEY has problems. It could be lack of `\n` or try using double quotes `"` in config.yml instead of single quotes 
+5. References [R34] and [R35] are your friends
  
  # Ubuntu environment variables
  
@@ -525,3 +541,5 @@ Since I'm already using the default port `9000` for another application the new 
 - [R31] - https://stackoverflow.com/questions/50768002/docker-ufw-connect-to-host-machine
 - [R32] - https://medium.com/sentry-with-docker/installing-sentry-with-docker-c1d83dfee577
 - [R33] - https://github.com/getsentry/onpremise
+- [R34] - https://github.com/getsentry/sentry/issues/12670
+- [R35] - https://github.com/getsentry/sentry/issues/12953
