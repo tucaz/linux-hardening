@@ -454,6 +454,26 @@ host    all             all             172.17.0.2/32           md5 #where 172.1
  sudo service postgresql start
  ```
  
+ # Installing Sentry using Docker and PostgreSql in host
+ 
+ After a lot of fiddling I was able to install Sentry using Docker by following [R32]. However. it seems easier to use do it with `docker-compose` explained in [R33].
+ 
+ The only "different" thing I had to do is to pass all environment variables to the `run` command using the `-e` option. Example:
+ 
+ ```sh
+ sudo docker-compose run \
+-e SENTRY_SECRET_KEY=${SENTRY_SECRET_KEY} \
+-e SENTRY_ENVIRONMENT=${SENTRY_ENVIRONMENT} \
+-e SENTRY_POSTGRES_HOST=${SENTRY_POSTGRES_HOST} \
+-e SENTRY_POSTGRES_PORT=${SENTRY_POSTGRES_PORT} \
+-e SENTRY_DB_NAME=${SENTRY_DB_NAME} \
+-e SENTRY_DB_USER=${SENTRY_DB_NAME} \
+-e SENTRY_DB_PASSWORD=${SENTRY_DB_PASSWORD} \
+--rm web upgrade
+```
+
+Since I'm already using the default port `9000` for another application the new port needs to be specified in `docker-compose.yml`.
+ 
  # Ubuntu environment variables
  
  For system-wide environment variables using `/etc/environment` is an option. However, not all characters are valid there. `#` is an example. 
@@ -503,3 +523,5 @@ host    all             all             172.17.0.2/32           md5 #where 172.1
 - [R29] - https://www.digitalocean.com/community/questions/passing-environment-variables-to-node-js-using-pm2
 - [R30] - https://docs.docker.com/install/linux/docker-ce/ubuntu/
 - [R31] - https://stackoverflow.com/questions/50768002/docker-ufw-connect-to-host-machine
+- [R32] - https://medium.com/sentry-with-docker/installing-sentry-with-docker-c1d83dfee577
+- [R33] - https://github.com/getsentry/onpremise
