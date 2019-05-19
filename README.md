@@ -433,6 +433,27 @@ Addind Docker APT repository
  sudo ufw allow in on docker0 from 172.17.0.0/16 to 172.17.0.0/16
  ```
  
+ If you are trying to connect from Docker to a PostgreSql instance located in the host it is necessary to allow the connection in two configuration files:
+ 
+ - `/etc/postgresql/10/main/postgresql.conf`
+ - `/etc/postgresql/10/main/pg_hba.conf`
+ 
+```sh
+#postgresql.conf
+listen_addresses = 'localhost, 172.17.0.1' #where 172.17.0.1 is the IP address assigned to docker0
+```
+ 
+ ```sh
+#pg_hba.conf
+host    all             all             172.17.0.2/32           md5 #where 172.17.0.2 is the IP address given to the docker instance
+ ```
+ 
+ After that, PostgreSql needs to be restarted:
+ 
+ ```sh
+ sudo service postgresql start
+ ```
+ 
  # Ubuntu environment variables
  
  For system-wide environment variables using `/etc/environment` is an option. However, not all characters are valid there. `#` is an example. 
