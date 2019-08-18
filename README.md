@@ -520,7 +520,9 @@ When installing GitHub from Sentry make sure that:
  - TARGET
  - SOURCE
  
- You want to create a new profile for each source folder you plan to backup.
+ You will want to create a new profile for each source folder you plan to backup.
+ 
+ For a step by step guide see [R37].
  
 # References
 
@@ -560,3 +562,4 @@ When installing GitHub from Sentry make sure that:
 - [R34] - https://github.com/getsentry/sentry/issues/12670
 - [R35] - https://github.com/getsentry/sentry/issues/12953
 - [R36] - https://duply.net/wiki/index.php/Duply-documentation
+- [R37] - https://wiki.archlinux.org/index.php/Duply
