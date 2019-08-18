@@ -506,6 +506,22 @@ When installing GitHub from Sentry make sure that:
  export VAR_NAME=value
  ```
  
+ # Backup
+ 
+ In order to backup stuff from our server we will use duplicity wrapped in duply [R36]. It offers a nice config file that you can setup and forget.
+ 
+ To create a profile:
+ ```sh
+ duply my_profile create
+ ```
+ 
+ Inside the profile you should fill:
+ - GPG_PW
+ - TARGET
+ - SOURCE
+ 
+ You want to create a new profile for each source folder you plan to backup.
+ 
 # References
 
 - [R1] - https://linux-audit.com/audit-and-harden-your-ssh-configuration/
@@ -543,3 +559,4 @@ When installing GitHub from Sentry make sure that:
 - [R33] - https://github.com/getsentry/onpremise
 - [R34] - https://github.com/getsentry/sentry/issues/12670
 - [R35] - https://github.com/getsentry/sentry/issues/12953
+- [R36] - https://duply.net/wiki/index.php/Duply-documentation
